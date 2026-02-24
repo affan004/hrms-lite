@@ -215,7 +215,7 @@ export default function App() {
 
       <header className="hero">
         <h1>HRMS Lite</h1>
-        <p>Manage employees and daily attendance with production-ready flows.</p>
+        <p>Manage employees and daily attendance.</p>
       </header>
 
       <section className="summary-grid">
