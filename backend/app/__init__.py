@@ -1,0 +1,2 @@
+"""HRMS Lite backend package."""
+

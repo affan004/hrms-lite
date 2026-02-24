@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: hrms-lite-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hrms-lite-db
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: https://your-frontend-domain.vercel.app
+
+databases:
+  - name: hrms-lite-db
+    plan: free
+
