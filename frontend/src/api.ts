@@ -7,7 +7,11 @@ import type {
   EmployeeInput,
 } from "./types";
 
-const apiBase = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000")
+const defaultApiBase = import.meta.env.PROD
+  ? "https://backend-six-psi-29.vercel.app"
+  : "http://localhost:8000";
+
+const apiBase = (import.meta.env.VITE_API_BASE_URL || defaultApiBase)
   .trim()
   .replace(/\/+$/, "");
 

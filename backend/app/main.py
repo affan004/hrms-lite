@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from typing import Any
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Request
@@ -31,6 +32,16 @@ app.add_middleware(
 )
 
 
+def _json_safe(value: Any) -> Any:
+    if isinstance(value, (str, int, float, bool)) or value is None:
+        return value
+    if isinstance(value, dict):
+        return {str(key): _json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple, set)):
+        return [_json_safe(item) for item in value]
+    return str(value)
+
+
 @app.on_event("startup")
 def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
@@ -42,7 +53,7 @@ async def validation_exception_handler(
 ) -> JSONResponse:
     return JSONResponse(
         status_code=422,
-        content={"message": "Validation failed.", "details": exc.errors()},
+        content={"message": "Validation failed.", "details": _json_safe(exc.errors())},
     )
 
 
@@ -62,4 +73,3 @@ def health_check() -> dict[str, str]:
 app.include_router(employees.router)
 app.include_router(attendance.router)
 app.include_router(dashboard.router)
-
