@@ -18,8 +18,6 @@ function getLocalIsoDate(): string {
   return local.toISOString().split("T")[0];
 }
 
-const today = getLocalIsoDate();
-
 const emptySummary: DashboardSummary = {
   total_employees: 0,
   total_attendance_entries: 0,
@@ -36,7 +34,7 @@ const emptyEmployeeForm: EmployeeInput = {
 
 const emptyAttendanceForm: AttendanceInput = {
   employee_id: "",
-  date: today,
+  date: getLocalIsoDate(),
   status: "Present",
 };
 
@@ -55,6 +53,7 @@ function formatDate(dateString: string): string {
 }
 
 export default function App() {
+  const maxAttendanceDate = getLocalIsoDate();
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
   const [summary, setSummary] = useState<DashboardSummary>(emptySummary);
@@ -140,6 +139,11 @@ export default function App() {
   };
 
   const handleAttendanceInput = (field: keyof AttendanceInput, value: string) => {
+    if (field === "date" && value > maxAttendanceDate) {
+      setAttendanceActionError(`Future dates are locked. You can mark attendance up to ${maxAttendanceDate}.`);
+      setAttendanceForm((prev) => ({ ...prev, date: maxAttendanceDate }));
+      return;
+    }
     setAttendanceForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -185,6 +189,10 @@ export default function App() {
   const handleMarkAttendance = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setAttendanceActionError(null);
+    if (attendanceForm.date > maxAttendanceDate) {
+      setAttendanceActionError(`Future dates are locked. You can mark attendance up to ${maxAttendanceDate}.`);
+      return;
+    }
     setIsSubmittingAttendance(true);
     try {
       await api.createAttendance({
@@ -342,7 +350,7 @@ export default function App() {
                 type="date"
                 value={attendanceForm.date}
                 onChange={(event) => handleAttendanceInput("date", event.target.value)}
-                max={today}
+                max={maxAttendanceDate}
                 required
               />
             </label>
@@ -384,8 +392,11 @@ export default function App() {
               <input
                 type="date"
                 value={attendanceFilterDate}
-                onChange={(event) => setAttendanceFilterDate(event.target.value)}
-                max={today}
+                onChange={(event) => {
+                  const selectedDate = event.target.value;
+                  setAttendanceFilterDate(selectedDate > maxAttendanceDate ? maxAttendanceDate : selectedDate);
+                }}
+                max={maxAttendanceDate}
               />
             </label>
             <button className="secondary-btn" type="button" onClick={() => setAttendanceFilterDate("")}>

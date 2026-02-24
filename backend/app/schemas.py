@@ -51,6 +51,13 @@ class AttendanceCreate(BaseModel):
             raise ValueError("Employee ID cannot be empty.")
         return cleaned
 
+    @field_validator("date")
+    @classmethod
+    def validate_attendance_date(cls, value: date) -> date:
+        if value > date.today():
+            raise ValueError("Attendance date cannot be in the future.")
+        return value
+
 
 class AttendanceResponse(BaseModel):
     id: int
@@ -66,4 +73,3 @@ class DashboardSummary(BaseModel):
     total_attendance_entries: int
     today_present: int
     today_absent: int
-
