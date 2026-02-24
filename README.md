@@ -41,29 +41,29 @@ This project provides:
 
 ```text
 .
-├── backend
-│   ├── app
-│   │   ├── database.py
-│   │   ├── main.py
-│   │   ├── models.py
-│   │   ├── schemas.py
-│   │   └── routers
-│   │       ├── attendance.py
-│   │       ├── dashboard.py
-│   │       └── employees.py
-│   ├── requirements.txt
-│   ├── Procfile
-│   └── .env.example
-├── frontend
-│   ├── src
-│   │   ├── components
-│   │   ├── api.ts
-│   │   ├── App.tsx
-│   │   ├── styles.css
-│   │   └── types.ts
-│   ├── package.json
-│   └── .env.example
-└── README.md
+|-- backend
+|   |-- app
+|   |   |-- database.py
+|   |   |-- main.py
+|   |   |-- models.py
+|   |   |-- schemas.py
+|   |   `-- routers
+|   |       |-- attendance.py
+|   |       |-- dashboard.py
+|   |       `-- employees.py
+|   |-- requirements.txt
+|   |-- Procfile
+|   `-- .env.example
+|-- frontend
+|   |-- src
+|   |   |-- components
+|   |   |-- api.ts
+|   |   |-- App.tsx
+|   |   |-- styles.css
+|   |   `-- types.ts
+|   |-- package.json
+|   `-- .env.example
+`-- README.md
 ```
 
 ## API Endpoints
@@ -152,3 +152,4 @@ Frontend default URL: `http://localhost:5173`
 - [ ] All required flows working end-to-end
 - [ ] README submission links updated
 - [ ] Repository public or access-enabled
+
