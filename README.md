@@ -6,7 +6,7 @@ Production-ready HRMS Lite application for managing employees and daily attendan
 
 - Live Application URL: `https://frontend-green-kappa-83.vercel.app`
 - Backend API URL: `https://backend-six-psi-29.vercel.app`
-- GitHub Repository URL: `ADD_REPO_LINK_AFTER_PUSH`
+- GitHub Repository URL: `https://github.com/affan004/hrms-lite`
 
 ## Project Overview
 
