@@ -12,7 +12,13 @@ import type {
   EmployeeInput,
 } from "./types";
 
-const today = new Date().toISOString().split("T")[0];
+function getLocalIsoDate(): string {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().split("T")[0];
+}
+
+const today = getLocalIsoDate();
 
 const emptySummary: DashboardSummary = {
   total_employees: 0,
@@ -336,6 +342,7 @@ export default function App() {
                 type="date"
                 value={attendanceForm.date}
                 onChange={(event) => handleAttendanceInput("date", event.target.value)}
+                max={today}
                 required
               />
             </label>
@@ -378,6 +385,7 @@ export default function App() {
                 type="date"
                 value={attendanceFilterDate}
                 onChange={(event) => setAttendanceFilterDate(event.target.value)}
+                max={today}
               />
             </label>
             <button className="secondary-btn" type="button" onClick={() => setAttendanceFilterDate("")}>
@@ -428,4 +436,3 @@ export default function App() {
     </div>
   );
 }
-
