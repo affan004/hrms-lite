@@ -77,6 +77,20 @@ This project provides:
 - `GET /api/attendance/employee/{employee_id}`
 - `GET /api/dashboard/summary`
 
+## API Testing (Swagger)
+
+FastAPI provides interactive API docs automatically.
+
+Local (when backend runs on port 8000):
+
+- Health check: `http://127.0.0.1:8000/api/health`
+- Swagger UI: `http://127.0.0.1:8000/docs`
+
+Deployed backend:
+
+- Health check: `https://backend-six-psi-29.vercel.app/api/health`
+- Swagger UI: `https://backend-six-psi-29.vercel.app/docs`
+
 ## Validation and Error Handling
 
 - Required field validation
